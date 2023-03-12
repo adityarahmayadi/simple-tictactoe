@@ -7,13 +7,15 @@ import {
   Wrapper,
   Title,
   Score,
-  ScoreCol
+  ScoreCol,
+  Reset
 } from "./styles";
 
 export function Board({
   score,
   isComplete = false,
-  setIsComplete
+  setIsComplete,
+  onReset
 }){
   const [turn, setTurn] = useState(0);
   const [data, setData] = useState([
@@ -25,7 +27,7 @@ export function Board({
 
   const handleDraw = useCallback((e, index) => {
     if(data[index - 1] === '' && !isComplete){
-      const current = turn === 0 ? '⭕' : '❌';
+      const current = turn === 0 ? '❌' : '⭕';
       data[index -1] = current;
 
       e.target.innerText = current;
@@ -110,7 +112,7 @@ export function Board({
         </GameBoard>
         <Scoreboard>
           <ScoreCol>
-            <Title>Player 1 (⭕)</Title>
+            <Title>Player 1 (❌)</Title>
             <Score>{score[0] || 0}</Score>
           </ScoreCol>
           <ScoreCol>
@@ -118,10 +120,11 @@ export function Board({
             <Score>{score[1] || 0}</Score>
           </ScoreCol>
           <ScoreCol>
-            <Title>Player 2 (❌)</Title>
+            <Title>Player 2 (⭕)</Title>
             <Score>{score[2] || 0}</Score>
           </ScoreCol>
         </Scoreboard>
+        <Reset onClick={onReset}>Reset Score</Reset>
       </Wrapper>
     </Container>
   );
